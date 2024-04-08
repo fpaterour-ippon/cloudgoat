@@ -1,5 +1,6 @@
 import boto3
 import os
+import uuid
 
 
 def add_header_to_csv_file(input_bucket, input_key):
@@ -13,7 +14,7 @@ def add_header_to_csv_file(input_bucket, input_key):
 
     if header == "order_date,item_id,price,country_code":
         output_bucket = os.environ["BUCKET_Final"]
-        output_key = "result.csv"
+        output_key = f"result-{str(uuid.uuid4())}.csv"
         s3.put_object(Bucket=output_bucket, Key=output_key, Body=content)
 
         return [output_bucket, output_key]
@@ -24,7 +25,7 @@ def add_header_to_csv_file(input_bucket, input_key):
         content_with_header = header + "\r\n" + content
 
         output_bucket = os.environ["BUCKET_Final"]
-        output_key = "result.csv"
+        output_key = f"result-{str(uuid.uuid4())}.csv"
         s3.put_object(Bucket=output_bucket, Key=output_key, Body=content_with_header)
 
         return [output_bucket, output_key]

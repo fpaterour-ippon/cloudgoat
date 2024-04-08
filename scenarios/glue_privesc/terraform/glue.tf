@@ -54,6 +54,10 @@ resource "aws_glue_job" "cg-glue-job" {
   max_retries = 0
 
   timeout = 3
+
+  execution_property {
+    max_concurrent_runs = 10
+  }
 }
 
 resource "aws_s3_object" "glue_script_file" {
